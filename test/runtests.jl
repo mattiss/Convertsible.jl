@@ -16,6 +16,14 @@ using DataFrames
             push!(df_expected, ["John Doe" 1])
             @test isequal(df, df_expected) 
         end
+
+        @testset "Rename columns" begin
+            df = copy(df_tests)
+            Convertsible.rename_columns(df, rename = Dict("Name" => "NewName", "Age" => "NewAge"))
+            df_expected = DataFrame(Id = Int[], NewName = String[], NewAge = Int[])
+            push!(df_expected, [1 "John Doe" 35])
+            @test isequal(df, df_expected) 
+        end
     end
 
     @testset "Testing Type Conversions" begin
