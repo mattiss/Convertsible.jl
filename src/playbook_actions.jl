@@ -1,5 +1,7 @@
 ALLOWED_ACTIONS = ["load_csv","select_columns","normalize_columns", "rename_columns", "convert_to_float", "write_csv", "write_parquet"]
 
+include("conversions.jl")
+
 using DataFrames
 using FilePaths, CSV
 function load_csv(df::AbstractDataFrame; filepath, kwargs...)

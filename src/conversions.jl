@@ -1,5 +1,5 @@
 
-function Base.convert(Bool, s::String)
+function Base.convert(::Type{Bool}, s::String)
     res = false
     if lowercase(s) in ["true","yes"]
         res = true
