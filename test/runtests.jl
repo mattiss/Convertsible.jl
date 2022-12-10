@@ -7,7 +7,6 @@ using DataFrames
     df_tests = DataFrame(Id = Int[], Name = String[], Age = Int[])
     push!(df_tests, [1 "John Doe" 35])
 
-
     @testset "Testing Playbook actions" begin
         @testset "Select columns" begin
             df = copy(df_tests)
@@ -22,6 +21,15 @@ using DataFrames
             Convertsible.rename_columns(df, rename = Dict("Name" => "NewName", "Age" => "NewAge"))
             df_expected = DataFrame(Id = Int[], NewName = String[], NewAge = Int[])
             push!(df_expected, [1 "John Doe" 35])
+            @test isequal(df, df_expected) 
+        end
+
+        @testset "Normalize columns" begin
+            df = copy(df_tests)
+            df[!, :"bad looking column name"] = [0]
+            Convertsible.normalize_columns(df, method = "pascal_case")
+            df_expected = DataFrame(Id = Int[], Name = String[], Age = Int[], BadLookingColumnName = Int[])
+            push!(df_expected, [1 "John Doe" 35 0])
             @test isequal(df, df_expected) 
         end
     end
