@@ -1,6 +1,6 @@
 module Convertsible
 
-export ALLOWED_ACTIONS, main
+export ALLOWED_ACTIONS, main, convert
 include("playbooks.jl")
 
 using ArgParse
