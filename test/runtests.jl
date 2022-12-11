@@ -84,8 +84,11 @@ using DataFrames
     end    
 
     @testset "Testing Playbooks" begin
-        @testset "Testing '$s'" for s in ["playbooks\\csv2parquet_playbook.yml", "playbooks\\data_transforms.yml"]
-            Convertsible.run_playbook(s)
+        playbook_tests=Any[]
+        push!(playbook_tests,Dict("playbook"=>"playbooks\\csv2parquet_playbook.yml"))
+        push!(playbook_tests,Dict("playbook"=>"playbooks\\data_transforms.yml"))
+        @testset "Testing '$(test["playbook"])'" for test in playbook_tests
+            Convertsible.run_playbook(test["playbook"]; vars=test)
         end
     end
     
