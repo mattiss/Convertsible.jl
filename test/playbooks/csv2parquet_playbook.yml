@@ -7,8 +7,8 @@
   tasks:
     - name: Load the CSV file
       load_csv:
-        filepath : {{ csv_filepath }}
+        filepath : {{{ csv_filepath }}}
 
     - name: Output to parquet
       write_parquet:
-        filepath: {{ parquet_filepath }}
+        filepath: {{{ parquet_filepath }}}

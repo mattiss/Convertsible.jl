@@ -8,7 +8,7 @@
   tasks:
     - name: Load the CSV file
       load_csv:
-        filepath : {{ csv_filepath }}
+        filepath : {{{ csv_filepath }}}
         select: ["Name", "Id", "Age"]
 
     - name: Select/Reorder the columns 
@@ -34,8 +34,8 @@
 
     - name: Output to csv 
       write_csv:
-        filepath: {{ output_filepath }}
+        filepath: {{{ output_filepath }}}
 
     - name: Output to parquet
       write_parquet:
-        filepath: {{ parquet_filepath }}
+        filepath: {{{ parquet_filepath }}}
