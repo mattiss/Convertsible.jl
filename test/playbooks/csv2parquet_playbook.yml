@@ -1,6 +1,8 @@
 ---
 - name: A simple example that converts a CSV file into parquet 
   vars:
+    csv_filepath: "data\\csv\\sample_data.csv"
+    parquet_filepath: "output\\result_csv2parquet.parquet"
  
   tasks:
     - name: Load the CSV file

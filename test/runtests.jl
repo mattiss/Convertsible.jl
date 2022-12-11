@@ -82,5 +82,11 @@ using DataFrames
             @test convert(String, 35.0) == "35.0"
         end
     end    
+
+    @testset "Testing Playbooks" begin
+        @testset "Testing '$s'" for s in ["playbooks\\csv2parquet_playbook.yml", "playbooks\\data_transforms.yml"]
+            Convertsible.run_playbook(s)
+        end
+    end
     
 end

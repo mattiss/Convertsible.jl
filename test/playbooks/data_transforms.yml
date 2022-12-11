@@ -1,7 +1,9 @@
 ---
 - name: A more involved example, that realizes some data transformations
   vars:
-    output_filepath: test.csv
+    csv_filepath: "data\\csv\\sample_data.csv"
+    parquet_filepath: "output\\result_data_transforms.parquet"
+    output_filepath: "output\\result_data_transforms.csv"
  
   tasks:
     - name: Load the CSV file
@@ -27,6 +29,7 @@
       convert_columns:
         types:
           Id: String
+          NewName: Bool
           NewAge: Double
 
     - name: Output to csv 
