@@ -1,6 +1,7 @@
 using Convertsible
 using Test
 using DataFrames
+using Mmap
 
 @testset "Convertsible.jl" begin
 
@@ -84,12 +85,37 @@ using DataFrames
     end    
 
     @testset "Testing Playbooks" begin
-        playbook_tests=Any[]
-        push!(playbook_tests,Dict("playbook"=>"playbooks\\csv2parquet_playbook.yml"))
-        push!(playbook_tests,Dict("playbook"=>"playbooks\\data_transforms.yml"))
-        @testset "Testing '$(test["playbook"])'" for test in playbook_tests
-            Convertsible.run_playbook(test["playbook"]; vars=test)
+
+        playbook = "playbooks\\csv2parquet_playbook.yml"
+        input_filepath = "data\\csv\\sample_data.csv"
+        actual_filepath = "output\\actual\\01_csv2parquet_sample_data.parquet"
+        expected_filepath = "output\\expected\\01_csv2parquet_sample_data.parquet"
+        @testset "Testing '$playbook'" begin
+            vars = Dict()
+            push!(vars, "csv_filepath"=>input_filepath)
+            push!(vars, "parquet_filepath"=>actual_filepath)
+            Convertsible.run_playbook(playbook; vars=vars)
+            f_actual = open(actual_filepath)
+            f_expected = open(expected_filepath);
+            @test Mmap.mmap(f_actual) == Mmap.mmap(f_expected)
         end
+
+        playbook = "playbooks\\data_transforms.yml"
+        input_filepath = "data\\csv\\sample_data.csv"
+        actual_filepath_csv = "output\\actual\\02_data_transforms_sample_data.csv"
+        actual_filepath_parquet = "output\\actual\\02_data_transforms_sample_data.parquet"
+        expected_filepath = "output\\expected\\02_data_transforms_sample_data.parquet"
+        @testset "Testing '$playbook'" begin
+            vars = Dict()
+            push!(vars, "csv_filepath"=>input_filepath)
+            push!(vars, "output_filepath"=>actual_filepath_csv)
+            push!(vars, "parquet_filepath"=>actual_filepath_parquet)
+            Convertsible.run_playbook(playbook; vars=vars)
+            f_actual = open(actual_filepath_parquet)
+            f_expected = open(expected_filepath);
+            @test Mmap.mmap(f_actual) == Mmap.mmap(f_expected)
+        end
+
     end
     
 end
