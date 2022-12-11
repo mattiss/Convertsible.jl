@@ -7,3 +7,7 @@ function Base.convert(::Type{Bool}, s::String)
     return res
 end
 
+
+function Base.convert(::Type{String}, n::Number)
+    return string(n)
+end

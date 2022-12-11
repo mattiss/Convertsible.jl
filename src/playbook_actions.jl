@@ -1,4 +1,5 @@
 ALLOWED_ACTIONS = ["load_csv","select_columns","normalize_columns", "rename_columns", "convert_to_float", "write_csv", "write_parquet"]
+ALLOWED_CONVERSION_TYPES = Dict("Double"=>Float64,"String"=>String,"Int"=>Int,"Bool"=>Bool)
 
 include("conversions.jl")
 
@@ -52,8 +53,10 @@ function rename_columns(df::AbstractDataFrame; rename, kwargs...)
     printstyled("  Done.\n";color = :yellow)
 end
 
-function convert_to_float(df::AbstractDataFrame; columns, kwargs...)
-    printstyled("  Converting columns $columns to float...\n";color = :yellow)
-    df[!, columns] = convert.(Float64, df[!, columns])
+function convert_columns(df::AbstractDataFrame; types, kwargs...)
+    printstyled("  Casting column types $(keys(types))...\n";color = :yellow)
+    for (col_name, new_type) in pairs(types)
+        df[!, col_name] = convert.(ALLOWED_CONVERSION_TYPES[new_type], df[!, col_name])
+    end   
     printstyled("  Done.\n";color = :yellow)
 end

@@ -32,6 +32,14 @@ using DataFrames
             push!(df_expected, [1 "John Doe" 35 0])
             @test isequal(df, df_expected) 
         end
+
+        @testset "Convert columns types" begin
+            df = copy(df_tests)
+            Convertsible.convert_columns(df, types = Dict("Id" => "String", "Name" => "Bool", "Age" => "Double"))
+            df_expected = DataFrame(Id = String[], Name = Bool[], Age = Float64[])
+            push!(df_expected, ["1" false 35.0])
+            @test isequal(df, df_expected) 
+        end
     end
 
     @testset "Testing Type Conversions" begin
@@ -40,6 +48,11 @@ using DataFrames
         end
         @testset "Casting '$s' to Bool" for s in ["false", "False", "FALSE", "No", "NO", "zobi"]
             @test convert(Bool, s) == false
+        end
+        
+        @testset "Casting Number to String" begin
+            @test convert(String, 12345) == "12345"
+            @test convert(String, 35.0) == "35.0"
         end
     end    
     
