@@ -1,0 +1,12 @@
+---
+- name: A simple example that converts a CSV file into parquet 
+  vars:
+ 
+  tasks:
+    - name: Load the CSV file
+      load_csv:
+        filepath : {{ csv_filepath }}
+
+    - name: Output to parquet
+      write_parquet:
+        filepath: {{ parquet_filepath }}
