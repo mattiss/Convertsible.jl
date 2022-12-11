@@ -86,10 +86,10 @@ using Mmap
 
     @testset "Testing Playbooks" begin
 
-        playbook = "playbooks\\csv2parquet_playbook.yml"
-        input_filepath = "data\\csv\\sample_data.csv"
-        actual_filepath = "output\\actual\\01_csv2parquet_sample_data.parquet"
-        expected_filepath = "output\\expected\\01_csv2parquet_sample_data.parquet"
+        playbook = "playbooks/csv2parquet_playbook.yml"
+        input_filepath = "data/csv/sample_data.csv"
+        actual_filepath = "output/actual/01_csv2parquet_sample_data.parquet"
+        expected_filepath = "output/expected/01_csv2parquet_sample_data.parquet"
         @testset "Testing '$playbook'" begin
             vars = Dict()
             push!(vars, "csv_filepath"=>input_filepath)
@@ -100,11 +100,11 @@ using Mmap
             @test Mmap.mmap(f_actual) == Mmap.mmap(f_expected)
         end
 
-        playbook = "playbooks\\data_transforms.yml"
-        input_filepath = "data\\csv\\sample_data.csv"
-        actual_filepath_csv = "output\\actual\\02_data_transforms_sample_data.csv"
-        actual_filepath_parquet = "output\\actual\\02_data_transforms_sample_data.parquet"
-        expected_filepath = "output\\expected\\02_data_transforms_sample_data.parquet"
+        playbook = "playbooks/data_transforms.yml"
+        input_filepath = "data/csv/sample_data.csv"
+        actual_filepath_csv = "output/actual/02_data_transforms_sample_data.csv"
+        actual_filepath_parquet = "output/actual/02_data_transforms_sample_data.parquet"
+        expected_filepath = "output/expected/02_data_transforms_sample_data.parquet"
         @testset "Testing '$playbook'" begin
             vars = Dict()
             push!(vars, "csv_filepath"=>input_filepath)
