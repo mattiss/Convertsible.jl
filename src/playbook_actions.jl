@@ -21,7 +21,7 @@ end
 using Parquet
 function write_parquet(df::AbstractDataFrame; filepath, kwargs...)
     printstyled("  Test Writing $filepath...\n";color = :yellow)
-    display(df)
+    @debug display(df)
     Parquet.write_parquet(filepath, df)
     printstyled("  Done.\n";color = :yellow)
 end
