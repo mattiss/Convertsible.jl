@@ -1,0 +1,38 @@
+---
+- name: A more involved example, that realizes some data transformations
+  vars:
+    output_filepath: test.csv
+ 
+  tasks:
+    - name: Load the CSV file
+      load_csv:
+        filepath : {{ csv_filepath }}
+        select: ["Name", "Id", "Age"]
+
+    - name: Select/Reorder the columns 
+      select_columns:
+        columns: ["Id", "Name", "Age"]
+
+    - name: Normalize the column names (force Pascal-Cased names)
+      normalize_columns:
+        method: pascal_case
+
+    - name: rename columns 
+      rename_columns:
+        rename:
+          Name: "NewName"
+          Age: "NewAge"
+
+    - name: convert types 
+      convert_columns:
+        types:
+          Id: String
+          NewAge: Double
+
+    - name: Output to csv 
+      write_csv:
+        filepath: {{ output_filepath }}
+
+    - name: Output to parquet
+      write_parquet:
+        filepath: {{ parquet_filepath }}
