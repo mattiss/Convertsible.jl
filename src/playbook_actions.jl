@@ -1,4 +1,4 @@
-ALLOWED_ACTIONS = ["load_csv","select_columns","normalize_columns", "rename_columns", "convert_to_float", "write_csv", "write_parquet"]
+ALLOWED_ACTIONS = ["load_csv","select_columns","normalize_columns", "rename_columns", "convert_columns", "write_csv", "write_parquet"]
 ALLOWED_CONVERSION_TYPES = Dict("Double"=>Float64,"String"=>String,"Int"=>Int,"Bool"=>Bool)
 
 include("conversions.jl")
