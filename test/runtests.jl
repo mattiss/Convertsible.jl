@@ -43,7 +43,7 @@ using DataFrames
 
         @testset "Load csv with partially missing data" begin
             df = DataFrame()
-            Convertsible.load_csv(df, filepath="data/csv/partially_missing_data.csv", types=Dict("Age"=>Int))
+            Convertsible.load_csv(df, filepath="data/csv/partially_missing_data.csv")
             df_expected = DataFrame(Id = Int[], Name = String[], Age = Union{Missing, Int}[], Income = Int[])
             push!(df_expected, [1 "John Doe" missing 100000])
             push!(df_expected, [2 "Harry Cover" 24 230000])
@@ -57,7 +57,7 @@ using DataFrames
 
         @testset "Load csv with totally missing data" begin
             df = DataFrame()
-            Convertsible.load_csv(df, filepath="data/csv/totally_missing_data.csv", types=Dict("Age"=>Int))
+            Convertsible.load_csv(df, filepath="data/csv/totally_missing_data.csv")
             df_expected = DataFrame(Id = Int[], Name = String[], Age = Union{Missing, Int}[], Income = Int[])
             push!(df_expected, [1 "John Doe" missing 100000])
             @test isequal(df_expected, df) 
